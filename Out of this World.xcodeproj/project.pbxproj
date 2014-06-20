@@ -33,6 +33,7 @@
 		7E6CF01B1954015D00790995 /* Uranus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E6CF0111954015D00790995 /* Uranus.jpg */; };
 		7E6CF01C1954015D00790995 /* Venus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E6CF0121954015D00790995 /* Venus.jpg */; };
 		7E6CF01F1954025B00790995 /* JMSpaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6CF01E1954025B00790995 /* JMSpaceObject.m */; };
+		7E6CF06F195421FB00790995 /* JMSpaceImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6CF06E195421FB00790995 /* JMSpaceImageViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		7E6CF0121954015D00790995 /* Venus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Venus.jpg; sourceTree = "<group>"; };
 		7E6CF01D1954025B00790995 /* JMSpaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSpaceObject.h; sourceTree = "<group>"; };
 		7E6CF01E1954025B00790995 /* JMSpaceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSpaceObject.m; sourceTree = "<group>"; };
+		7E6CF06D195421FB00790995 /* JMSpaceImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSpaceImageViewController.h; sourceTree = "<group>"; };
+		7E6CF06E195421FB00790995 /* JMSpaceImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSpaceImageViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,8 @@
 		7E6CEF7619539B9200790995 /* Out of this World */ = {
 			isa = PBXGroup;
 			children = (
+				7E6CF06D195421FB00790995 /* JMSpaceImageViewController.h */,
+				7E6CF06E195421FB00790995 /* JMSpaceImageViewController.m */,
 				7E6CEF7F19539B9200790995 /* JMAppDelegate.h */,
 				7E6CEF8019539B9200790995 /* JMAppDelegate.m */,
 				7E6CEF8219539B9200790995 /* Main.storyboard */,
@@ -303,6 +308,7 @@
 				7E6CF01F1954025B00790995 /* JMSpaceObject.m in Sources */,
 				7E6CEFA719539CD300790995 /* JMOuterSpaceTableViewController.m in Sources */,
 				7E6CEF8119539B9200790995 /* JMAppDelegate.m in Sources */,
+				7E6CF06F195421FB00790995 /* JMSpaceImageViewController.m in Sources */,
 				7E6CEFAA1953BAAC00790995 /* AstronomicalData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
