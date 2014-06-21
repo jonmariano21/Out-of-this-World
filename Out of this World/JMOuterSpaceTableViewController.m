@@ -170,9 +170,12 @@
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
     
-    
-    
-    return 1;
+    if( [self.addedSpaceObjects count]){
+        return 2; //now will have 2 sections the new section for our discovered planets
+    }else{
+        return 1;
+
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -180,8 +183,12 @@
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
     
-    return [self.planets count]; //returns number of planets in array
+    if( section == 1 ){
+        return [self.addedSpaceObjects count];
+    }else{
+        return [self.planets count]; //returns number of planets in array
 
+    }
     
 }
 
@@ -200,11 +207,17 @@
 //        cell.backgroundColor = [UIColor blueColor];
 //    }
     
-    JMSpaceObject *planet = [ self.planets objectAtIndex: indexPath.row];
-    cell.textLabel.text = planet.name;
-    cell.detailTextLabel.text = planet.nickname;
-    cell.imageView.image = planet.spaceImage;
+    if( indexPath.section == 1 ){
+        //use new space object to customize our cell
+        
+    }else{
+        JMSpaceObject *planet = [ self.planets objectAtIndex: indexPath.row];
+        cell.textLabel.text = planet.name;
+        cell.detailTextLabel.text = planet.nickname;
+        cell.imageView.image = planet.spaceImage;
+    }
     
+    //customize the appearance of the TableViewCells
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];

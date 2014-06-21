@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic) NSMutableArray *planets; //MODEL
 
+@property (strong, nonatomic) NSMutableArray *addedSpaceObjects;
+
 @end
