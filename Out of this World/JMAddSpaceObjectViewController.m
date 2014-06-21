@@ -53,8 +53,34 @@
 */
 
 - (IBAction)cancelButtonPressed:(UIButton *)sender {
+    
+    [self.delegate didCancel];
+    
 }
 
 - (IBAction)addButtonPressed:(UIButton *)sender {
+    
+    JMSpaceObject *newSpaceObject = [self returnNewSpaceObject];
+    [self.delegate addSpaceObject: newSpaceObject];
 }
+
+
+//HELPER
+-(JMSpaceObject *)returnNewSpaceObject{
+    
+    JMSpaceObject *addedSpaceObject = [[JMSpaceObject alloc] init];
+    
+    addedSpaceObject.name = self.nameTextField.text;
+    addedSpaceObject.nickname = self.nicknameTextField.text;
+    addedSpaceObject.diameter = [self.diameterTextField.text floatValue];//Converts input of text field to a float
+    addedSpaceObject.temperature = [self.temperatureTextField.text floatValue];
+    addedSpaceObject.numberOfMoons = [self.numberOfMoonsTextField.text intValue];//Converts input of text field to a int
+    addedSpaceObject.interestFact = self.interestingFactTextField.text;
+    
+    addedSpaceObject.spaceImage = [UIImage imageNamed:@"EinsteinRing.jpg"];
+    
+    return addedSpaceObject;
+                                       
+}
+
 @end

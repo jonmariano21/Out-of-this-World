@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMAddSpaceObjectViewController.h"
 
-@interface JMOuterSpaceTableViewController : UITableViewController
+@interface JMOuterSpaceTableViewController : UITableViewController <JMAddSpaceObjectViewControllerDelegate> //conform to JMAddSpa..
 
 @property (strong, nonatomic) NSMutableArray *planets; //MODEL
 

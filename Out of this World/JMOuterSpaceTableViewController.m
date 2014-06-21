@@ -18,6 +18,27 @@
 
 @implementation JMOuterSpaceTableViewController
 
+#pragma mark - Lazy Instantiation of Properties (Lec158)
+
+//GETTER Methods
+// A way to access properties in header file
+// _ underscore resembles "self"
+-(NSMutableArray *)planets{
+    /* If we dont currently already have an instance var set up, allocate some memory for it*/
+    if( !_planets ){
+        _planets = [[NSMutableArray alloc] init];
+    }
+    return _planets; //returns instance var which we will be able to access using self.planets
+}
+
+-(NSMutableArray *)addedSpaceObjects{
+    if( !_addedSpaceObjects ){
+        _addedSpaceObjects = [[NSMutableArray alloc] init];
+    }
+    return _addedSpaceObjects;
+}
+
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -38,7 +59,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-    self.planets = [[NSMutableArray alloc] init];
+    //self.planets = [[NSMutableArray alloc] init]; can remove b/c of GETTERS at top
     
     //Create a loop to iterate through all planets
     for( NSMutableDictionary *planetData in [AstronomicalData allKnownPlanets]){ //Access array of dictionaries from AstronomicalData
@@ -92,12 +113,12 @@
 //    NSLog(@"%@", blueString);
     
 
-    // Wrap primitive w/in an OBJ inorder to use in an Array or a Dictionary
-    NSNumber *myInt = [NSNumber numberWithInt:5];
-    NSLog(@"%@", myInt);
-    
-    NSNumber *myFloat = [NSNumber numberWithFloat:3.14];
-    NSLog(@"%@", myFloat);
+    // HOW TO: WRAP PRIMITIVE w/in an OBJ inorder to use in an Array or a Dictionary
+//    NSNumber *myInt = [NSNumber numberWithInt:5];
+//    NSLog(@"%@", myInt);
+//    
+//    NSNumber *myFloat = [NSNumber numberWithFloat:3.14];
+//    NSLog(@"%@", myFloat);
 
 
     
@@ -127,14 +148,30 @@
             NSIndexPath *path = [self.tableView indexPathForCell:sender];
             
             //Use path to index into or array of planets
-            JMSpaceObject *selectedObject = self.planets[ path.row ];
+            JMSpaceObject *selectedObject;
+            
+            if( path.section == 0 ){
+                selectedObject = self.planets[ path.row ];
+            }else if(path.section == 1 ){
+                selectedObject = self.addedSpaceObjects[ path.row ];
+            }
             
             //Set next view controller property
             nextViewController.spaceObject = selectedObject;
             
-        }
+        }//end inner if
         
-    }
+    }//end outer if
+    
+    /*
+     * The prepareForSeque method is called right before the viewController trasition occurs.
+     * We pass in the NSIndexPath of the accessory button pressed. We then confirm that the destination
+     * ViewController is the JMSpaceDataViewController.
+     * Finally, we create a var targetViewController that points to our destination ViewController.
+     * Determine the indexPath of the selected cell and use that indexPath to access a JMSpaceObject
+     * in our planet array.
+     * Finally, set the property spaceObject of the var tagetViewController to the selected obj.
+     */
     if( [sender isKindOfClass: [NSIndexPath class] ] ){
         if( [segue.destinationViewController isKindOfClass: [JMSpaceDataViewController class] ] ){
             
@@ -143,14 +180,34 @@
             
             NSIndexPath *path = sender;
             
-            JMSpaceObject *selectedObject = self.planets[ path.row ];
+            JMSpaceObject *selectedObject;
+            
+            if( path.section == 0 ){
+                selectedObject = self.planets[ path.row ];
+            }else if( path.section == 1 ){
+                selectedObject = self.addedSpaceObjects[ path.row ];
+            }
             
             targetViewController.spaceObject = selectedObject;
         }
         
+    }//end outer if
+    
+    if( [segue.destinationViewController isKindOfClass: [JMAddSpaceObjectViewController class] ]){
+        
+        JMAddSpaceObjectViewController *addSpaceObjectVC = segue.destinationViewController;
+        
+        /*
+         * Set the "delegate" property in JMAddSpaceObjectViewController.h to "self"
+         * "self" is the current ViewController which in this case is JMOuterSpaceTableViewController
+         */
+        addSpaceObjectVC.delegate = self;
+        
     }
     
-}
+    
+    
+}//end prepareForSeque
 
 
 
@@ -162,6 +219,34 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - JMAddSpaceObjectViewController Delegate
+
+//Implement the required methods of JMAddSpaceObjectViewControllerDelegate protocol
+
+-(void)didCancel{
+    NSLog(@"didCancel");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+-(void)addSpaceObject:(JMSpaceObject *)spaceObject{
+    
+//    if( !self.addedSpaceObjects ){
+//        self.addedSpaceObjects = [[NSMutableArray alloc] init];
+//        
+//    }//removed b/c of GETTERS at top
+    
+    [self.addedSpaceObjects addObject: spaceObject];
+    
+    NSLog(@"addSpaceObject");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.tableView reloadData];//Updates table view with any new data
+    
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -209,6 +294,13 @@
     
     if( indexPath.section == 1 ){
         //use new space object to customize our cell
+        JMSpaceObject *planet = [self.addedSpaceObjects objectAtIndex: indexPath.row];
+        
+        cell.textLabel.text = planet.name;
+        cell.detailTextLabel.text = planet.nickname;
+        cell.imageView.image = planet.spaceImage;
+        
+        
         
     }else{
         JMSpaceObject *planet = [ self.planets objectAtIndex: indexPath.row];
