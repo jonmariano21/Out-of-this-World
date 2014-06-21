@@ -9,6 +9,7 @@
 #import "JMOuterSpaceTableViewController.h"
 #import "AstronomicalData.h"
 #import "JMSpaceObject.h"
+#import "JMSpaceImageViewController.h"
 
 @interface JMOuterSpaceTableViewController ()
 
@@ -48,7 +49,7 @@
         [self.planets addObject:planet];
         
         
-    }
+    }//end for loop
     
     
 //    NSString *planet1 = @"Mercury";
@@ -102,7 +103,47 @@
     
     
 
+}//end viewDidLoad
+
+
+// METHOD: prepareForSeque is automatically called when we segue to a new view controller
+// id is a pointer to ANY obj
+// sender is the obj that triggered the segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSLog(@"%@", sender);
+    
+    //Check to make sure sender is of type UITableViewCell
+    if( [sender isKindOfClass:[UITableViewCell class] ]){
+        
+        //Test to make sure that the view controller that were going to is the JMSpaceImageViewController Class
+        if( [segue.destinationViewController isKindOfClass:[JMSpaceImageViewController class] ]){
+            
+            JMSpaceImageViewController  *nextViewController = segue.destinationViewController;
+            
+            //What spaceObject is currently on my UITableViewCell
+            //Where I am on my table view using NSIndexPath
+            NSIndexPath *path = [self.tableView indexPathForCell:sender];
+            
+            //Use path to index into or array of planets
+            JMSpaceObject *selectedObject = self.planets[ path.row ];
+            
+            //Set next view controller property
+            nextViewController.spaceObject = selectedObject;
+            
+            
+            
+            
+        }
+        
+    }
+    
 }
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

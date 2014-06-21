@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMSpaceObject.h"
 
-@interface JMSpaceImageViewController : UIViewController
+@interface JMSpaceImageViewController : UIViewController <UIScrollViewDelegate> //Conform to delegate
+
+
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (strong, nonatomic) UIImageView *imageView;
+
+@property (strong, nonatomic) JMSpaceObject *spaceObject;
+
 
 @end
