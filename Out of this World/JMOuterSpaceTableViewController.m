@@ -10,6 +10,7 @@
 #import "AstronomicalData.h"
 #import "JMSpaceObject.h"
 #import "JMSpaceImageViewController.h"
+#import "JMSpaceDataViewController.h"
 
 @interface JMOuterSpaceTableViewController ()
 
@@ -131,9 +132,20 @@
             //Set next view controller property
             nextViewController.spaceObject = selectedObject;
             
+        }
+        
+    }
+    if( [sender isKindOfClass: [NSIndexPath class] ] ){
+        if( [segue.destinationViewController isKindOfClass: [JMSpaceDataViewController class] ] ){
             
+            //Instance of SpaceDataViewcontroller
+            JMSpaceDataViewController *targetViewController = segue.destinationViewController;
             
+            NSIndexPath *path = sender;
             
+            JMSpaceObject *selectedObject = self.planets[ path.row ];
+            
+            targetViewController.spaceObject = selectedObject;
         }
         
     }
@@ -198,6 +210,20 @@
     cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     
     return cell;
+}
+
+#pragma mark - UITableView Delegate
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+
+    //NSLog(@"Accessory button is working %i", indexPath.row);
+    
+    //Make segue
+    [self performSegueWithIdentifier:@"push to space data" sender:indexPath];
+    
+    
+    
+    
 }
 
 

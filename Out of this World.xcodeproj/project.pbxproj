@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E046E8F19552D1B00A2777E /* JMSpaceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E046E8E19552D1B00A2777E /* JMSpaceDataViewController.m */; };
 		7E6CEF7119539B9200790995 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CEF7019539B9200790995 /* Foundation.framework */; };
 		7E6CEF7319539B9200790995 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CEF7219539B9200790995 /* CoreGraphics.framework */; };
 		7E6CEF7519539B9200790995 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CEF7419539B9200790995 /* UIKit.framework */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E046E8D19552D1B00A2777E /* JMSpaceDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSpaceDataViewController.h; sourceTree = "<group>"; };
+		7E046E8E19552D1B00A2777E /* JMSpaceDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSpaceDataViewController.m; sourceTree = "<group>"; };
 		7E6CEF6D19539B9200790995 /* Out of this World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Out of this World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E6CEF7019539B9200790995 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7E6CEF7219539B9200790995 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -150,6 +153,8 @@
 				7E6CEFA619539CD300790995 /* JMOuterSpaceTableViewController.m */,
 				7E6CF01D1954025B00790995 /* JMSpaceObject.h */,
 				7E6CF01E1954025B00790995 /* JMSpaceObject.m */,
+				7E046E8D19552D1B00A2777E /* JMSpaceDataViewController.h */,
+				7E046E8E19552D1B00A2777E /* JMSpaceDataViewController.m */,
 				7E6CEF8819539B9200790995 /* Images.xcassets */,
 				7E6CEF7719539B9200790995 /* Supporting Files */,
 			);
@@ -305,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E6CEF7D19539B9200790995 /* main.m in Sources */,
+				7E046E8F19552D1B00A2777E /* JMSpaceDataViewController.m in Sources */,
 				7E6CF01F1954025B00790995 /* JMSpaceObject.m in Sources */,
 				7E6CEFA719539CD300790995 /* JMOuterSpaceTableViewController.m in Sources */,
 				7E6CEF8119539B9200790995 /* JMAppDelegate.m in Sources */,
