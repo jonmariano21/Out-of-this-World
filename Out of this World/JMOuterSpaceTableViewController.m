@@ -17,6 +17,8 @@
 @end
 
 @implementation JMOuterSpaceTableViewController
+#define ADDED_SPACE_OBJECTS_KEY @"Added Space Objects Array"
+
 
 #pragma mark - Lazy Instantiation of Properties (Lec158)
 
@@ -72,6 +74,15 @@
         
         
     }//end for loop
+    
+    NSArray *myPlanetsAsPropertyLists = [[NSUserDefaults standardUserDefaults] arrayForKey: ADDED_SPACE_OBJECTS_KEY];
+    
+    for( NSDictionary *dictionary in myPlanetsAsPropertyLists ){
+        JMSpaceObject *spaceObject = [self spaceObjectForDictionary: dictionary];
+        
+        [self.addedSpaceObjects addObject: spaceObject];
+        
+    }
     
     
 //    NSString *planet1 = @"Mercury";
@@ -239,10 +250,53 @@
     
     [self.addedSpaceObjects addObject: spaceObject];
     
+    //Will save to NSUserDefaults here
+    NSMutableArray *spaceObjectsAsPropertyLists = [ [ [NSUserDefaults standardUserDefaults] arrayForKey:ADDED_SPACE_OBJECTS_KEY] mutableCopy ];
+    
+    if( !spaceObjectsAsPropertyLists ){
+        
+        spaceObjectsAsPropertyLists = [[NSMutableArray alloc] init];
+    }
+    
+    [spaceObjectsAsPropertyLists addObject: [self spaceObjectAsAPropertyList: spaceObject]];
+    
+    [[NSUserDefaults standardUserDefaults] setObject: spaceObjectsAsPropertyLists forKey:ADDED_SPACE_OBJECTS_KEY];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];//SAVES NSUserDefaults w/the NSMutableArray we just added to it
+    
+    
     NSLog(@"addSpaceObject");
     [self dismissViewControllerAnimated:YES completion:nil];
     
     [self.tableView reloadData];//Updates table view with any new data
+    
+}
+
+#pragma mark - HELPER METHODS
+
+//Private method so dont need in header
+-(NSDictionary *)spaceObjectAsAPropertyList: (JMSpaceObject *) spaceObject{
+    
+    //Convert image into NSData
+    NSData *imageData = UIImagePNGRepresentation(spaceObject.spaceImage);
+    
+    
+    //NOTE: Cant pass primitives like int, float into an array or dictionary, so have to convert primitive into NSNumber using @()
+    
+    NSDictionary *dictionary = @{PLANET_NAME: spaceObject.name, PLANET_GRAVITY: @(spaceObject.gravitationalForce), PLANET_DIAMETER: @(spaceObject.diameter), PLANET_YEAR_LENGTH: @(spaceObject.yearLength), PLANET_DAY_LENGTH: @(spaceObject.dayLength), PLANET_TEMPERATURE: @(spaceObject.temperature), PLANET_NUMBER_OF_MOONS: @(spaceObject.numberOfMoons), PLANET_NICKNAME: spaceObject.nickname, PLANET_INTERESTING_FACT: spaceObject.interestFact, PLANET_IMAGE: imageData };
+    
+    
+    
+    return dictionary;
+}
+
+-(JMSpaceObject *)spaceObjectForDictionary: (NSDictionary *)dictionary{
+    
+    NSData *dataForImage = dictionary[PLANET_IMAGE];
+    UIImage *spaceObjectImage = [UIImage imageWithData: dataForImage];
+    
+    JMSpaceObject *spaceObject = [[JMSpaceObject alloc] initWithData: dictionary andImage: spaceObjectImage];
+    return spaceObject;
     
 }
 
@@ -332,27 +386,43 @@
 }
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
+    if( indexPath.section == 1 ) return YES;
+    else return NO;
+    
+}
+
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        
+        [self.addedSpaceObjects removeObjectAtIndex: indexPath.row];
+        
+        NSMutableArray *newSavedSpaceObjectData = [[NSMutableArray alloc] init];
+        
+        for(JMSpaceObject *spaceObject in self.addedSpaceObjects){
+            [newSavedSpaceObjectData addObject: [self spaceObjectAsAPropertyList: spaceObject]];
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject: newSavedSpaceObjectData forKey: ADDED_SPACE_OBJECTS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
